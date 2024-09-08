@@ -22,7 +22,7 @@ const HotelCard = ({ hotel, checkInDate, nights, adults }) => { // Receive param
         };
 
         fetchPhotos();
-    }, [hotel.location_id]);
+    }, [backendUrl]);
 
     return (
         <div className="max-w-xs rounded-md overflow-hidden shadow-lg bg-white flex flex-col">

@@ -11,9 +11,11 @@ const SearchSummary = () => {
 
     return (
         <>
-            <Header />
-            <SearchSummarySection />
-            <Footer />
+             <Header />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <SearchSummarySection />
+                </Suspense>
+                <Footer />
         </>
     );
 };

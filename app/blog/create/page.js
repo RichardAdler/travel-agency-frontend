@@ -5,7 +5,7 @@ import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
-import ReactQuill from "react-quill"; // Import Quill
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import Header from "@/app/components/page-specific/Blog/Header";
 import Footer from "@/app/components/global/Footer";
@@ -67,6 +67,7 @@ const CreateBlog = () => {
     }
   };
 
+  // Ensure user is logged in before showing the form
   if (!user) return <p>You need to be logged in to create a blog post.</p>;
 
   return (
