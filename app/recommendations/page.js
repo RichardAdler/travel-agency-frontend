@@ -1,11 +1,11 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-
+import { useRouter } from 'next/navigation'; 
 const Recommendations = () => {
     const [results, setResults] = useState([]);
     const [error, setError] = useState(null);
-    const router = useRouter();
+    const router = useRouter(); 
     const { destination, budget, travelDates, numAdults, numChildren, numInfants, travelType } = router.query;
 
     useEffect(() => {
