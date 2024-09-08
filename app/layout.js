@@ -20,8 +20,7 @@ export default function RootLayout({ children }) {
       <body className={`${playfair.className} ${rubik.className}`}>
         <Navbar />
         <ChatWidget />
-        <main>{children}</main>
-        <Footer />
+        <main>{children}</main>        
         <div id="portal-root"></div>
       </body>
     </html>
