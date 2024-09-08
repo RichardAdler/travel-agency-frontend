@@ -25,7 +25,13 @@ const PopularDestinations = () => {
                         const photos = imageResponse.data.data;
                         const photoUrl = photos && photos.length > 0 && photos[0].images.original.url
                             ? photos[0].images.original.url
-                            : '/images/default-hotel.jpg';
+                            : <Image
+                            src={images[destination.location_id] || '/images/default-hotel.jpg'}
+                            alt={destination.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />;
 
                         setImages((prevImages) => ({
                             ...prevImages,

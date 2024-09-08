@@ -1,14 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic"; // Import dynamic for client-side loading
 import { db, auth, storage } from "../../firebase/firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import Header from "@/app/components/page-specific/Blog/Header";
 import Footer from "@/app/components/global/Footer";
+
+// Dynamically import ReactQuill to prevent SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -19,6 +22,13 @@ const CreateBlog = () => {
   const [error, setError] = useState("");
   const [user] = useAuthState(auth);
   const router = useRouter();
+
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,16 +50,16 @@ const CreateBlog = () => {
         publishedAt: new Date(),
       };
 
+      // Add the blog data to Firestore
       const docRef = await addDoc(collection(db, "blogs"), blogData);
 
+      // Upload the image
       const imageRef = ref(storage, `blog/${docRef.id}`);
       await uploadBytes(imageRef, imageFile);
 
+      // Get image URL and update the blog document
       const imageUrl = await getDownloadURL(imageRef);
-
-      await updateDoc(doc(db, "blogs", docRef.id), {
-        imageUrl: imageUrl,
-      });
+      await updateDoc(doc(db, "blogs", docRef.id), { imageUrl });
 
       router.push("/blog");
     } catch (err) {

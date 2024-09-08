@@ -21,10 +21,10 @@ const TravelersTestimonials = () => {
                 console.error('Error fetching testimonials:', err);
                 setError('Failed to fetch testimonials');
             }
-        };
-
-        fetchTestimonials();
-    }, [backendUrl]); // Add backendUrl to the dependency array
+            };
+        
+            fetchTestimonials();
+        }, [backendUrl]); // Add backendUrl as a dependency
 
     const scrollTo = (index) => {
         if (carouselRef.current) {
