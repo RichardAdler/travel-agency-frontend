@@ -1,8 +1,7 @@
-import Index from './index/page'
-
+import HomePage from './index/page';
 
 export default function Home() {
   return (
-    <Index />
+    <HomePage />
   );
 }

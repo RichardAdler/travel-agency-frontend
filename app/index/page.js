@@ -1,21 +1,20 @@
-"use client"; // Ensures it's marked as a client component
-
-import { useState } from 'react'; // Import useState from React
+"use client";
+import { useState } from 'react';
 import Navbar from '@/components/global/Navbar';
-import HomeHeader from '../components/page-specific/Home/HomeHeader';
+import HomeHeader from '@/components/page-specific/Home/HomeHeader';
 import SearchForm from '@/components/page-specific/Home/SearchForm';
 import PopularDestinations from '@/components/page-specific/Home/PopularDestinations';
 import BlogSection from '@/components/page-specific/Home/BlogSection';
 import TravelersTestimonials from '@/components/page-specific/Home/TravelersTestimonials';
 import NewsletterSection from '@/components/page-specific/Home/Newsletter';
 import Footer from '@/components/global/Footer';
-import ChatWidget from '../components/global/chatwidget/ChatWidget';
+import ChatWidget from '@/components/global/chatwidget/ChatWidget';
 
 export default function HomePage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const toggleChat = () => {
-    setIsChatOpen((prevState) => !prevState);
+    setIsChatOpen(prevState => !prevState);
   };
 
   return (
