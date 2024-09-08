@@ -49,7 +49,7 @@ const PopularDestinations = () => {
         };
 
         fetchDestinations();
-    }, []);
+    }, [backendUrl]);
 
     const scrollTo = (index) => {
         if (carouselRef.current) {

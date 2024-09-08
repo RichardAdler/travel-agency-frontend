@@ -96,7 +96,7 @@ const LocationDetails = () => {
 
         fetchLocationDetails();
         fetchLocationPhotos();
-    }, [id]);
+    }, [id], [backendUrl]);
 
     const toggleShowMoreAmenities = () => {
         setShowMoreAmenities(!showMoreAmenities);
