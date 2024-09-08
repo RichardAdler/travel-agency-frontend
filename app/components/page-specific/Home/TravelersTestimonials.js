@@ -54,7 +54,7 @@ const TravelersTestimonials = () => {
         <section className="py-16 bg-white">
             <div className="container mx-auto px-4 relative">
                 <div className="text-right mb-8">
-                    <h2 className="text-5xl font-bold font-playfair">Traveler&apos;s Experiences</h2>
+                <h2 className="text-5xl font-bold font-playfair">Traveler&apos;s Experiences</h2>
                     <div className="w-56 h-0.5 bg-[#E16A3D] mt-2 ml-auto"></div> 
                     <p className="text-lg text-gray-600 font-rubik mt-1">
                         Here some awesome feedback from our travelers
