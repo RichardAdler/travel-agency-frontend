@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/components/*": ["./app/components/*"],
+      "@/global/*": ["./app/components/global/*"],
+      "@/page-specific/*": ["./app/components/page-specific/*"],
+      "@/public/*": ["./public/*"]
+    },
+    "jsx": "preserve",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "include": ["app/**/*.js", "pages/**/*.js"]
+}
