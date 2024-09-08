@@ -23,8 +23,9 @@ const BlogSection = () => {
                     </div>
                     <div className="w-full md:w-1/2 flex flex-col justify-center">
                         <h3 className="text-5xl font-playfair mb-4 leading-tight">
-                            Beautiful Italy<br />Let's travel
+                            Beautiful Italy<br />Let&apos;s travel
                         </h3>
+
                         <p className="text-gray-700 font-rubik mb-4">
                             But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues...
                         </p>

@@ -9,6 +9,8 @@ import ReactQuill from "react-quill"; // Import Quill
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import Header from "@/app/components/page-specific/Blog/Header";
 import Footer from "@/app/components/global/Footer";
+import Image from 'next/image';
+
 
 const EditBlog = ({ params }) => {
   const [title, setTitle] = useState("");
@@ -122,7 +124,14 @@ const EditBlog = ({ params }) => {
             <label className="block text-gray-700 font-bold mb-2">Featured Image</label>
             <input type="file" onChange={handleImageChange} />
             {imageUrl && !imageFile && (
-              <img src={imageUrl} alt="Current Blog Image" className="mt-4 h-48 object-cover" />
+              <Image
+              src={imageUrl}
+              alt="Current Blog Image"
+              className="mt-4 h-48 object-cover"
+              width={500} 
+              height={300} 
+            />
+            
             )}
           </div>
           <button
