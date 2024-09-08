@@ -1,61 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
 
 const PopularDestinations = () => {
-    const [destinations, setDestinations] = useState([]);
-    const [error, setError] = useState(null);
-    const [images, setImages] = useState({});
-    const [loading, setLoading] = useState(true);
     const carouselRef = useRef(null);
     const [scrollIndex, setScrollIndex] = useState(0);
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    useEffect(() => {
-        const fetchDestinations = async () => {
-            try {
-                const response = await axios.get(`${backendUrl}/api/popular-destinations`);
-                const destinationsData = response.data.data;
-                setDestinations(destinationsData);
 
-                const imagePromises = destinationsData.map(async (destination) => {
-                    try {
-                        const imageResponse = await axios.get(`${backendUrl}/api/photos`, {
-                            params: { locationId: destination.location_id }
-                        });
-                        const photos = imageResponse.data.data;
-                        const photoUrl = photos && photos.length > 0 && photos[0].images.original.url
-                            ? photos[0].images.original.url
-                            : <Image
-                            src={images[destination.location_id] || '/images/default-hotel.jpg'}
-                            alt={destination.name}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />;
-
-                        setImages((prevImages) => ({
-                            ...prevImages,
-                            [destination.location_id]: photoUrl,
-                        }));
-                    } catch (imageError) {
-                        console.error(`Failed to fetch image for location ${destination.location_id}`, imageError);
-                        setImages((prevImages) => ({
-                            ...prevImages,
-                            [destination.location_id]: '/images/default-hotel.jpg',
-                        }));
-                    }
-                });
-
-                await Promise.all(imagePromises);
-                setLoading(false);
-            } catch (err) {
-                console.error('Error fetching destinations:', err);
-                setError('Failed to fetch destinations');
-            }
-        };
-
-        fetchDestinations();
-    }, [backendUrl]);
+    // Example destination names, assuming these match the image names in /public/images/countries/
+    const destinations = [
+        { name: 'Amsterdam', location_string: 'Netherlands' },
+        { name: 'Budapest', location_string: 'Hungary' },
+        { name: 'Rome', location_string: 'Italy' },
+        { name: 'London', location_string: 'United Kingdom' },
+        { name: 'Paris', location_string: 'France' },
+        { name: 'Tenerife', location_string: 'Spain' },
+        { name: 'Marmaris', location_string: 'Turkey' },
+    ];
 
     const scrollTo = (index) => {
         if (carouselRef.current) {
@@ -76,10 +35,6 @@ const PopularDestinations = () => {
             scrollTo(scrollIndex + 1);
         }
     };
-
-    if (error) {
-        return <p className="text-red-500 text-center mt-4">{error}</p>;
-    }
 
     return (
         <section className="py-16 bg-white">
@@ -130,20 +85,18 @@ const PopularDestinations = () => {
                 </div>
                 <div className="relative">
                     <div ref={carouselRef} className="flex overflow-hidden space-x-6">
-                        {destinations.map((destination) => (
-                            <div key={destination.location_id} className="min-w-[240px]">
-                                <div className="relative rounded-lg overflow-hidden shadow-lg" style={{ height: '320px' }}>
-                                    {loading || !images[destination.location_id] ? (
-                                        <div className="absolute inset-0 bg-gray-300 animate-pulse"></div>
-                                    ) : (
-                                        <Image
-                                            src={images[destination.location_id]}
-                                            alt={destination.name}
-                                            fill
-                                            className="object-cover"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        />
-                                    )}
+                        {destinations.map((destination, index) => (
+                            <div key={index} className="min-w-[240px]">
+                                <div className="relative rounded-lg overflow-hidden shadow-lg" style={{ height: '300px' }}>
+                                    <Image
+                                        src={`/images/countries/${destination.name}.jpg`}
+                                        alt={destination.name}
+                                        width={330}   // Adjust width to optimize
+                                        height={350}  // Adjust height to optimize
+                                        quality={30}  // Lower quality to reduce file size
+                                        className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
                                     <div className="absolute inset-0 bg-black bg-opacity-35 p-4 flex flex-col justify-end">
                                         <h3 className="text-3xl drop-shadow-xl font-semibold text-white mb-1">{destination.name}</h3>
                                         <p className="text-sm text-white">{destination.location_string}</p>
