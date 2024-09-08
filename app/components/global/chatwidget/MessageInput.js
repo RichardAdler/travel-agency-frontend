@@ -28,7 +28,7 @@ const MessageInput = ({ messages, setMessages, threadId, setThreadId }) => {
 
         try {
             // Sending the message to the server via POST request
-            const response = await axios.post('${backendUrl}/chat', { message: input, threadId });
+            const response = await axios.post(`${backendUrl}/chat`, { message: input, threadId });
 
             // Update threadId if a new one was created
             if (response.data.threadId) {
