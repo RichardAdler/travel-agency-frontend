@@ -6,7 +6,7 @@ const RealEyeComponent = () => {
     const initializeRealEyeSDK = () => {
       if (window.EmbeddedPageSdk) {
         const debugMode = false;
-        const stimulusId = '7a412c3d-9121-4027-a9be-5a8db7a9cd53';
+        const stimulusId = 'f46b76c8-274e-4dd7-8f3e-9c92d5f5fd44';
         const forceRun = false;
 
         const reSdk = new window.EmbeddedPageSdk(debugMode, stimulusId, forceRun);

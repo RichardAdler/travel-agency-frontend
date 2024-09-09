@@ -23,13 +23,22 @@ export default function Home() {
     <>
       <Navbar />
       <HomeHeader toggleChat={toggleChat} />
-      <SearchForm />
-      <PopularDestinations />
-      <BlogSection />
-      <TravelersTestimonials />
-      <NewsletterSection />
+      <div data-re-aoi-name="QuickSearch">
+        <SearchForm />
+      </div>
+      <div data-re-aoi-name="PopularDestinations">
+        <PopularDestinations />
+      </div>
+      <div data-re-aoi-name="BlogSection">
+        <BlogSection />
+      </div>
+      <div data-re-aoi-name="Testimonials">
+        <TravelersTestimonials />
+      </div>
+      <div data-re-aoi-name="Newsletter">
+        <NewsletterSection />
+      </div>
       <Footer />
-      {/* Pass the isOpen and toggleChat to ChatWidget */}
       <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
       <RealEyeComponent />
     </>
