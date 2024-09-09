@@ -8,7 +8,7 @@ const RealEyeComponent = () => {
     )
       .then(({ EmbeddedPageSdk }) => {
         const debugMode = false;
-        const stimulusId = 'f46b76c8-274e-4dd7-8f3e-9c92d5f5fd44'; // Replace with your stimulus ID
+        const stimulusId = '1cd50ee3-8e5f-4731-a6a0-fee0ecfea4b6'; // Replace with your stimulus ID
         const forceRun = false;
 
         // Initialize the RealEye SDK
