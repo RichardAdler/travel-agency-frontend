@@ -25,9 +25,10 @@ export default function RootLayout({ children }) {
       // Check if script is already added
       if (!document.getElementById("realeye-sdk-script")) {
         const script = document.createElement("script");
-        script.src = "https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js";
+        script.src = `https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js?cache-bust=${Date.now()}`;
         script.id = "realeye-sdk-script";
         script.type = "module"; // Use type="module" for the script
+        script.defer = true;  // Add defer
         document.head.appendChild(script);
 
         // Initialize the RealEye SDK when the script loads
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
           console.log("RealEye SDK script loaded successfully");
 
           // Wait until the SDK is available in the window
-          if (typeof window.EmbeddedPageSdk === "function") {
+          if (window.EmbeddedPageSdk) {
             window.reSdk = new window.EmbeddedPageSdk(false);
           } else {
             console.error("EmbeddedPageSdk is not available. Please check the SDK script.");
