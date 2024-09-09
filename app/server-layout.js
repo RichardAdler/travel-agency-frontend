@@ -14,7 +14,7 @@ export const metadata = {
   description: "Where Technology Meets Wanderlust",
 };
 
-export default function RootLayout({ children }) {
+export default function ServerLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${playfair.className} ${rubik.className}`}>
