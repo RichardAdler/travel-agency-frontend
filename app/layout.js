@@ -20,49 +20,56 @@ export default function RootLayout({ children }) {
   };
 
     // Function to dynamically load the SDK script
-  const loadRealEyeSDK = () => {
-    return new Promise((resolve, reject) => {
-      if (!document.getElementById("realeye-sdk-script")) {
-        const script = document.createElement("script");
-        script.src = `https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js?cache-bust=${Date.now()}`;
-        script.id = "realeye-sdk-script";
-        script.type = "module"; 
-        document.head.appendChild(script);
-
-        script.onload = () => {
-          if (window.EmbeddedPageSdk) {
+    const loadRealEyeSDK = () => {
+      return new Promise((resolve, reject) => {
+        if (!document.getElementById("realeye-sdk-script")) {
+          const script = document.createElement("script");
+          script.src = `https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js?cache-bust=${Date.now()}`;
+          script.id = "realeye-sdk-script";
+          script.type = "module"; 
+          document.head.appendChild(script);
+  
+          script.onload = () => {
             console.log("RealEye SDK script loaded successfully");
-            resolve(window.EmbeddedPageSdk);
-          } else {
-            console.error("EmbeddedPageSdk is not available.");
-            reject(new Error("EmbeddedPageSdk is not available"));
-          }
-        };
-
-        script.onerror = () => {
-          console.error("Failed to load RealEye SDK script");
-          reject(new Error("Failed to load RealEye SDK script"));
-        };
-      } else {
-        // If the script is already loaded, resolve it immediately
-        resolve(window.EmbeddedPageSdk);
-      }
-    });
-  };
-
-  useEffect(() => {
-    loadRealEyeSDK()
-      .then(EmbeddedPageSdk => {
-        // Initialize the RealEye SDK after ensuring it's available
-        if (EmbeddedPageSdk) {
-          window.reSdk = new EmbeddedPageSdk(false);
-          console.log("RealEye SDK initialized successfully:", window.reSdk);
+  
+            // Check for SDK availability at intervals
+            const checkInterval = setInterval(() => {
+              if (window.EmbeddedPageSdk) {
+                clearInterval(checkInterval);
+                resolve(window.EmbeddedPageSdk);
+              } else {
+                console.log("Waiting for EmbeddedPageSdk to become available...");
+              }
+            }, 100); // Check every 100ms
+          };
+  
+          script.onerror = () => {
+            console.error("Failed to load RealEye SDK script");
+            reject(new Error("Failed to load RealEye SDK script"));
+          };
+        } else {
+          // If the script is already loaded, resolve it immediately
+          resolve(window.EmbeddedPageSdk);
         }
-      })
-      .catch(err => {
-        console.error("Error initializing RealEye SDK:", err);
       });
-  }, []);
+    };
+  
+    useEffect(() => {
+      loadRealEyeSDK()
+        .then(EmbeddedPageSdk => {
+          // Initialize the RealEye SDK after ensuring it's available
+          if (EmbeddedPageSdk) {
+            setTimeout(() => {
+              window.reSdk = new EmbeddedPageSdk(false);
+              console.log("RealEye SDK initialized successfully:", window.reSdk);
+            }, 500); // Delay to ensure all is loaded
+          }
+        })
+        .catch(err => {
+          console.error("Error initializing RealEye SDK:", err);
+        });
+    }, []);
+  
 
 
   return (
