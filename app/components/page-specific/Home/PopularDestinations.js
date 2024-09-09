@@ -93,7 +93,7 @@ const PopularDestinations = () => {
                                         alt={destination.name}
                                         width={330}   // Adjust width to optimize
                                         height={350}  // Adjust height to optimize
-                                        quality={30}  // Lower quality to reduce file size
+                                        quality={35}  // Lower quality to reduce file size
                                         className="object-cover"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />

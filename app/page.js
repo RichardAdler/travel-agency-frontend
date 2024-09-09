@@ -20,14 +20,13 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HomeHeader toggleChat={toggleChat} />
+      <HomeHeader />
       <SearchForm />
       <PopularDestinations />
       <BlogSection />
       <TravelersTestimonials />
       <NewsletterSection />
       <Footer />
-      <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
     </>
   );
 }
