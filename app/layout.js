@@ -25,8 +25,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {/* Pass the state to ChatWidget */}
         <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
-        <main>{children}</main>
-        <Footer />
+        <main>{children}</main>        
         <div id="portal-root"></div>
       </body>
     </html>
