@@ -17,16 +17,19 @@ export default function Home() {
   const toggleChat = () => {
     setIsChatOpen(prevState => !prevState);
   };
+
   return (
     <>
       <Navbar />
-      <HomeHeader />
+      <HomeHeader toggleChat={toggleChat} />
       <SearchForm />
       <PopularDestinations />
       <BlogSection />
       <TravelersTestimonials />
       <NewsletterSection />
       <Footer />
+      {/* Pass the isOpen and toggleChat to ChatWidget */}
+      <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
     </>
   );
 }

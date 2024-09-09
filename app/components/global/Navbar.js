@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,16 +9,15 @@ import AuthPopup from "./AuthPopup";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaBars, FaTimes } from "react-icons/fa"; // Icons for hamburger and close button
 
-const Navbar = () => {
+const Navbar = ({ isMobileMenuOpen, toggleMobileMenu }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [authPopupMode, setAuthPopupMode] = useState(null);
   const [user, loading] = useAuthState(auth);
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
-  const [profileImageUrl, setProfileImageUrl] = useState(
-    "/images/default-profile.png"
-  ); // Default profile image
+  const [profileImageUrl, setProfileImageUrl] = useState("/images/default-profile.png");
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Navbar = () => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
           setUserName(userDoc.data().name);
-          setUserRole(userDoc.data().role); // Ensure role is correctly set
+          setUserRole(userDoc.data().role);
           if (userDoc.data().profileImageUrl) {
             setProfileImageUrl(userDoc.data().profileImageUrl);
           }
@@ -82,7 +82,9 @@ const Navbar = () => {
               />
             </Link>
           </div>
-          <nav className="flex-1 flex justify-center space-x-8 text-xl">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-1 justify-center space-x-8 text-xl">
             <Link href="/" className="text-white hover:underline">
               Home
             </Link>
@@ -93,28 +95,33 @@ const Navbar = () => {
               Contact Us
             </Link>
             {user && userRole === "user" && (
-              <Link
-                href="/dashboard/user/my-bookings"
-                className="text-white hover:underline"
-              >
+              <Link href="/dashboard/user/my-bookings" className="text-white hover:underline">
                 My Bookings
               </Link>
             )}
             {user && userRole === "admin" && (
-              <Link
-                href="/dashboard/admin"
-                className="text-white hover:underline"
-              >
+              <Link href="/dashboard/admin" className="text-white hover:underline">
                 Admin
               </Link>
             )}
           </nav>
-          <div className="flex items-center space-x-4">
+
+           {/* Mobile Hamburger Icon */}
+           <div className="md:hidden">
+            <button onClick={toggleMobileMenu}>
+              {isMobileMenuOpen ? (
+                <FaTimes className="text-white w-8 h-8" />
+              ) : (
+                <FaBars className="text-white w-8 h-8" />
+              )}
+            </button>
+          </div>
+
+          {/* User Actions */}
+          <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <>
-                <Link
-                  href={userRole === "admin" ? "/dashboard/admin" : "/dashboard/user"}
-                >
+                <Link href={userRole === "admin" ? "/dashboard/admin" : "/dashboard/user"}>
                   <button className="bg-orange-500 text-white px-2 py-1 rounded-md flex items-center">
                     <Image
                       src={profileImageUrl}
@@ -148,7 +155,74 @@ const Navbar = () => {
             )}
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <nav className="md:hidden bg-gray-900 text-white space-y-4 p-4 absolute top-16 left-0 right-0 z-40">
+            <Link href="/" className="block text-white hover:underline" onClick={toggleMobileMenu}>
+              Home
+            </Link>
+            <Link href="/blog" className="block text-white hover:underline" onClick={toggleMobileMenu}>
+              Blog
+            </Link>
+            <Link href="/contact-us" className="block text-white hover:underline" onClick={toggleMobileMenu}>
+              Contact Us
+            </Link>
+            {user && userRole === "user" && (
+              <Link
+                href="/dashboard/user/my-bookings"
+                className="block text-white hover:underline"
+                onClick={toggleMobileMenu}
+              >
+                My Bookings
+              </Link>
+            )}
+            {user && userRole === "admin" && (
+              <Link
+                href="/dashboard/admin"
+                className="block text-white hover:underline"
+                onClick={toggleMobileMenu}
+              >
+                Admin
+              </Link>
+            )}
+            <div className="border-t border-gray-700 pt-4">
+              {user ? (
+                <>
+                  <button
+                    className="text-white block w-full text-left"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="text-white block w-full text-left"
+                    onClick={() => {
+                      openAuthPopup("login");
+                      toggleMobileMenu();
+                    }}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className="bg-orange-500 text-white w-full text-left px-4 py-2 rounded-md mt-2"
+                    onClick={() => {
+                      openAuthPopup("signup");
+                      toggleMobileMenu();
+                    }}
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
+            </div>
+          </nav>
+        )}
       </header>
+
       {authPopupMode && (
         <AuthPopup onClose={closeAuthPopup} initialMode={authPopupMode} />
       )}
