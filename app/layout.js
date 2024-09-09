@@ -19,46 +19,49 @@ export default function RootLayout({ children }) {
     setIsChatOpen(prevState => !prevState);
   };
 
-   // Load the RealEye SDK only once on component mount
-  useEffect(() => {
-    const initializeRealEyeSDK = () => {
-      // Check if script is already added
+    // Function to dynamically load the SDK script
+  const loadRealEyeSDK = () => {
+    return new Promise((resolve, reject) => {
       if (!document.getElementById("realeye-sdk-script")) {
         const script = document.createElement("script");
         script.src = `https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js?cache-bust=${Date.now()}`;
         script.id = "realeye-sdk-script";
-        script.type = "module"; // Use type="module" for the script
-        script.defer = true;  // Add defer
+        script.type = "module"; 
         document.head.appendChild(script);
 
-        // Initialize the RealEye SDK when the script loads
         script.onload = () => {
-          console.log("RealEye SDK script loaded successfully");
-
-          // Wait until the SDK is available in the window
           if (window.EmbeddedPageSdk) {
-            window.reSdk = new window.EmbeddedPageSdk(false);
+            console.log("RealEye SDK script loaded successfully");
+            resolve(window.EmbeddedPageSdk);
           } else {
-            console.error("EmbeddedPageSdk is not available. Please check the SDK script.");
+            console.error("EmbeddedPageSdk is not available.");
+            reject(new Error("EmbeddedPageSdk is not available"));
           }
         };
 
         script.onerror = () => {
           console.error("Failed to load RealEye SDK script");
+          reject(new Error("Failed to load RealEye SDK script"));
         };
+      } else {
+        // If the script is already loaded, resolve it immediately
+        resolve(window.EmbeddedPageSdk);
       }
-    };
+    });
+  };
 
-    // Initialize SDK after DOM is loaded
-    if (document.readyState === "complete") {
-      initializeRealEyeSDK();
-    } else {
-      window.addEventListener("load", initializeRealEyeSDK);
-    }
-
-    return () => {
-      window.removeEventListener("load", initializeRealEyeSDK);
-    };
+  useEffect(() => {
+    loadRealEyeSDK()
+      .then(EmbeddedPageSdk => {
+        // Initialize the RealEye SDK after ensuring it's available
+        if (EmbeddedPageSdk) {
+          window.reSdk = new EmbeddedPageSdk(false);
+          console.log("RealEye SDK initialized successfully:", window.reSdk);
+        }
+      })
+      .catch(err => {
+        console.error("Error initializing RealEye SDK:", err);
+      });
   }, []);
 
 
