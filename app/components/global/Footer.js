@@ -19,7 +19,7 @@ const Footer = () => {
                             className="mb-4"
                         />
                     </Link>
-                    <p className="text-sm">&copy; {new Date().getFullYear()} Holiday Havens. All rights reserved.</p>
+                    <p className="text-sm">&copy; {new Date().getFullYear()} Holiday Havens. Created by Richard Adler.</p>
                 </div>
 
                 {/* Menu */}
@@ -36,8 +36,8 @@ const Footer = () => {
                 <div>
                     <h3 className="font-semibold mb-4 text-2xl">Information</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><Link href="/terms">Terms & Conditions</Link></li>
-                        <li><Link href="/privacy">Privacy</Link></li>
+                        <li><Link href="/terms-and-conditions">Terms & Conditions</Link></li>
+                        <li><Link href="/privacy-policy">Privacy</Link></li>
                     </ul>
                 </div>
 
