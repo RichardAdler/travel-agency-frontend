@@ -19,6 +19,8 @@ export default function RootLayout({ children }) {
     setIsChatOpen(prevState => !prevState);
   };
 
+  
+
   return (
     <html lang="en">
       <body className={`${playfair.className} ${rubik.className}`}>

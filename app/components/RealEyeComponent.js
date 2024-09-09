@@ -1,38 +1,26 @@
-import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const RealEyeComponent = () => {
   useEffect(() => {
-    const initializeRealEyeSDK = () => {
-      if (window.EmbeddedPageSdk) {
+    // Dynamically import the RealEye SDK with Webpack ignoring external module
+    import(
+      /* webpackIgnore: true */ "https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js"
+    )
+      .then(({ EmbeddedPageSdk }) => {
         const debugMode = false;
-        const stimulusId = 'f46b76c8-274e-4dd7-8f3e-9c92d5f5fd44';
+        const stimulusId = 'f46b76c8-274e-4dd7-8f3e-9c92d5f5fd44'; // Replace with your stimulus ID
         const forceRun = false;
 
-        const reSdk = new window.EmbeddedPageSdk(debugMode, stimulusId, forceRun);
-      }
-    };
-
-    if (document.readyState === 'complete') {
-      initializeRealEyeSDK();
-    } else {
-      window.addEventListener('load', initializeRealEyeSDK);
-    }
-
-    return () => {
-      window.removeEventListener('load', initializeRealEyeSDK);
-    };
+        // Initialize the RealEye SDK
+        window.reSdk = new EmbeddedPageSdk(debugMode, stimulusId, forceRun);
+        console.log("RealEye SDK initialized successfully:", window.reSdk);
+      })
+      .catch((err) => {
+        console.error("Error loading RealEye SDK:", err);
+      });
   }, []);
 
-  return (
-    <>
-      <Script
-        src="https://app.realeye.io/sdk/js/testRunnerEmbeddableSdk-1.6.js"
-        strategy="lazyOnload"
-        onLoad={() => console.log("RealEye SDK Loaded")}
-      />
-    </>
-  );
+  return null; // No UI needed for this component
 };
 
 export default RealEyeComponent;
