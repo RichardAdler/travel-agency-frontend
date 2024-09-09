@@ -10,6 +10,7 @@ import TravelersTestimonials from '@/components/page-specific/Home/TravelersTest
 import NewsletterSection from '@/components/page-specific/Home/Newsletter';
 import Footer from '@/components/global/Footer';
 import ChatWidget from '@/components/global/chatwidget/ChatWidget';
+import RealEyeComponent from '@/components/RealEyeComponent'; 
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -30,6 +31,7 @@ export default function Home() {
       <Footer />
       {/* Pass the isOpen and toggleChat to ChatWidget */}
       <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
+      <RealEyeComponent />
     </>
   );
 }
