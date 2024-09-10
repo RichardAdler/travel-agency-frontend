@@ -1,6 +1,6 @@
 "use client"; 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/global/Navbar';
 import HomeHeader from '@/components/page-specific/Home/HomeHeader';
 import SearchForm from '@/components/page-specific/Home/SearchForm';
