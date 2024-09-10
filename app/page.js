@@ -11,6 +11,10 @@ import NewsletterSection from '@/components/page-specific/Home/Newsletter';
 import Footer from '@/components/global/Footer';
 import ChatWidget from '@/components/global/chatwidget/ChatWidget';
 import RealEyeComponent from '@/components/RealEyeComponent'; 
+import Hotjar from '@hotjar/browser';
+
+const siteId = 3660453;
+const hotjarVersion = 6;
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -18,6 +22,13 @@ export default function Home() {
   const toggleChat = () => {
     setIsChatOpen(prevState => !prevState);
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Initialize Hotjar on the client-side only
+      Hotjar.init(siteId, hotjarVersion);
+    }
+  }, []);
 
   return (
     <>
