@@ -1,10 +1,16 @@
 "use client"
 import { Playfair_Display, Rubik } from "next/font/google";
 import "./globals.css";
+import Cookies from 'js-cookie';
 import Navbar from './components/global/Navbar';
 import Footer from './components/global/Footer';
 import ChatWidget from './components/global/chatwidget/ChatWidget';
 import React, { useEffect, useState } from 'react';
+import CookieConsent from './components/global/CookieConsent'; 
+import Hotjar from '@hotjar/browser';
+
+const siteId = 3660453;
+const hotjarVersion = 6;
 
 // Load Google Fonts
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
@@ -18,6 +24,14 @@ export default function RootLayout({ children }) {
   const toggleChat = () => {
     setIsChatOpen(prevState => !prevState);
   };
+
+  useEffect(() => {
+    const consent = Cookies.get('cookie_consent');
+    if (consent === 'true') {
+      Hotjar.init(siteId, hotjarVersion);
+    }
+  }, []);
+
 
     // Function to dynamically load the SDK script
     const loadRealEyeSDK = () => {
@@ -78,7 +92,8 @@ export default function RootLayout({ children }) {
         <Navbar />
         {/* Pass the state to ChatWidget */}
         <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
-        <main>{children}</main>        
+        <main>{children}</main>  
+        <CookieConsent />      
         <div id="portal-root"></div>
       </body>
     </html>

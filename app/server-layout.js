@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from './components/global/Navbar';
 import Footer from './components/global/Footer';
 import React from 'react';
+import CookieConsent from './components/global/CookieConsent';
 
 // Load Google Fonts
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
@@ -21,6 +22,7 @@ export default function ServerLayout({ children }) {
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <CookieConsent />
         <div id="portal-root"></div>
       </body>
     </html>
