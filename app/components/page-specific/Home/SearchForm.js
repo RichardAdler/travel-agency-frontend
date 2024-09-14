@@ -190,7 +190,7 @@ const SearchForm = () => {
       {searchClicked && results.length === 0 && (
         <p className="text-center text-xl mt-4">No results found.</p>
       )}
-      <div className="ml-[50px] md:ml-[100px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 w-full">
+      <div className="ml-2 md:ml-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 w-full">
         {results.slice(0, 6).map((hotel, index) => (
           <HotelCard
             key={index}
