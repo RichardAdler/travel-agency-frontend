@@ -54,6 +54,7 @@ export default function Home() {
       <div data-re-aoi-name="Testimonials">
         <TravelersTestimonials />
       </div>
+      
       <div data-re-aoi-name="Newsletter">
         <NewsletterSection />
       </div>

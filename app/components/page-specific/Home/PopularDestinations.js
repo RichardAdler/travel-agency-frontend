@@ -5,7 +5,6 @@ const PopularDestinations = () => {
     const carouselRef = useRef(null);
     const [scrollIndex, setScrollIndex] = useState(0);
 
-    // Example destination names, assuming these match the image names in /public/images/countries/
     const destinations = [
         { name: 'Amsterdam', location_string: 'Netherlands' },
         { name: 'Budapest', location_string: 'Hungary' },
@@ -37,12 +36,16 @@ const PopularDestinations = () => {
     };
 
     return (
-        <section className="py-16 bg-white">
+        <section className="py-8 sm:py-16 bg-white">
             <div className="container mx-auto px-4 relative">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col-reverse md:flex-row justify-between items-center mb-8">
                     {/* Buttons on the left side */}
-                    <div className="flex space-x-2">
-                        <button onClick={handlePrev} className="bg-[#172432] text-white rounded-lg p-2 hover:bg-[#2d3748]">
+                    <div className="flex space-x-2 mt-4 md:mt-0">
+                        <button 
+                            onClick={handlePrev} 
+                            className="bg-[#172432] text-white rounded-lg p-2 hover:bg-[#2d3748] disabled:opacity-50"
+                            disabled={scrollIndex === 0}
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -58,7 +61,11 @@ const PopularDestinations = () => {
                                 />
                             </svg>
                         </button>
-                        <button onClick={handleNext} className="bg-[#E16A3D] text-white rounded-lg p-2 hover:bg-[#f9744d]">
+                        <button 
+                            onClick={handleNext} 
+                            className="bg-[#E16A3D] text-white rounded-lg p-2 hover:bg-[#f9744d] disabled:opacity-50"
+                            disabled={scrollIndex === destinations.length - 1}
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -75,30 +82,30 @@ const PopularDestinations = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className="text-right">
-                        <h2 className="text-5xl font-bold font-playfair">Popular Destinations</h2>
-                        <div className="w-64 h-0.5 bg-[#E16A3D] mt-2 ml-auto"></div>
-                        <p className="text-lg text-gray-600 font-rubik mt-1">
+                    <div className="text-center md:text-right">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair">Popular Destinations</h2>
+                        <div className="w-24 sm:w-48 md:w-64 h-0.5 bg-[#E16A3D] mt-2 mx-auto md:ml-auto"></div>
+                        <p className="text-base sm:text-lg text-gray-600 font-rubik mt-2">
                             Most popular destinations around the world, from historical places to natural wonders.
                         </p>
                     </div>
                 </div>
                 <div className="relative">
-                    <div ref={carouselRef} className="flex overflow-hidden space-x-6">
+                    <div ref={carouselRef} className="flex overflow-x-scroll space-x-6 scrollbar-hide">
                         {destinations.map((destination, index) => (
-                            <div key={index} className="min-w-[240px]">
+                            <div key={index} className="min-w-[240px] flex-shrink-0">
                                 <div className="relative rounded-lg overflow-hidden shadow-lg" style={{ height: '300px' }}>
                                     <Image
                                         src={`/images/countries/${destination.name}.jpg`}
                                         alt={destination.name}
-                                        width={330}   // Adjust width to optimize
-                                        height={350}  // Adjust height to optimize
-                                        quality={35}  // Lower quality to reduce file size
+                                        width={330}   
+                                        height={350}  
+                                        quality={35}  
                                         className="object-cover"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                     <div className="absolute inset-0 bg-black bg-opacity-35 p-4 flex flex-col justify-end">
-                                        <h3 className="text-3xl drop-shadow-xl font-semibold text-white mb-1">{destination.name}</h3>
+                                        <h3 className="text-xl sm:text-2xl md:text-3xl drop-shadow-xl font-semibold text-white mb-1">{destination.name}</h3>
                                         <p className="text-sm text-white">{destination.location_string}</p>
                                     </div>
                                 </div>

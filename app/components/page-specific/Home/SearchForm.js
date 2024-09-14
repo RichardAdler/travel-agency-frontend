@@ -96,11 +96,11 @@ const SearchForm = () => {
 
   return (
     <div className="container mx-auto px-4 py-4">
-      <div className="mb-8 py-8">
-        <h2 className="text-5xl font-bold font-playfair mb-4">Quick Search</h2>
-        <div className="w-52 h-0.5 bg-[#E16A3D]"></div>
+      <div className="mb-8 py-8 text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold font-playfair mb-4">Quick Search</h2>
+        <div className="w-24 sm:w-52 h-0.5 bg-[#E16A3D] mx-auto"></div>
       </div>
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <div>
           <label className="block mb-2 font-semibold">Destination</label>
           <input
@@ -182,7 +182,7 @@ const SearchForm = () => {
         </div>
       </div>
       <div className="text-center">
-        <button onClick={handleSearch} className="bg-orange-500 text-white py-2 px-12 rounded">
+        <button onClick={handleSearch} className="bg-orange-500 text-white py-2 px-6 md:px-12 rounded">
           Search
         </button>
       </div>
@@ -190,7 +190,7 @@ const SearchForm = () => {
       {searchClicked && results.length === 0 && (
         <p className="text-center text-xl mt-4">No results found.</p>
       )}
-      <div className="ml-[100px] grid grid-cols-3 gap-4 mt-8 w-full">
+      <div className="ml-[50px] md:ml-[100px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 w-full">
         {results.slice(0, 6).map((hotel, index) => (
           <HotelCard
             key={index}
