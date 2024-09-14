@@ -10,7 +10,6 @@ import TravelersTestimonials from '@/components/page-specific/Home/TravelersTest
 import NewsletterSection from '@/components/page-specific/Home/Newsletter';
 import Footer from '@/components/global/Footer';
 import ChatWidget from '@/components/global/chatwidget/ChatWidget';
-import RealEyeComponent from '@/components/RealEyeComponent'; 
 import Hotjar from '@hotjar/browser';
 
 const siteId = 3660453;
@@ -18,9 +17,14 @@ const hotjarVersion = 6;
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleChat = () => {
     setIsChatOpen(prevState => !prevState);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -32,7 +36,11 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {/* Pass the state and function to the Navbar */}
+      <Navbar 
+        isMobileMenuOpen={isMobileMenuOpen} 
+        toggleMobileMenu={toggleMobileMenu} 
+      />
       <HomeHeader toggleChat={toggleChat} />
       <div data-re-aoi-name="QuickSearch">
         <SearchForm />
@@ -50,8 +58,7 @@ export default function Home() {
         <NewsletterSection />
       </div>
       <Footer />
-      <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />
-      <RealEyeComponent />
+      <ChatWidget isOpen={isChatOpen} toggleChat={toggleChat} />      
     </>
   );
 }

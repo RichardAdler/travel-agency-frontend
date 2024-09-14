@@ -171,7 +171,7 @@ const Navbar = ({ isMobileMenuOpen, toggleMobileMenu }) => {
             <Link href="/contact-us" className="block text-white hover:underline" onClick={toggleMobileMenu}>
               Contact Us
             </Link>
-            <Link href="/faq" className="text-white hover:underline">
+            <Link href="/faq" className="block text-white hover:underline" onClick={toggleMobileMenu}>
               FAQ
             </Link>
             {user && userRole === "user" && (
