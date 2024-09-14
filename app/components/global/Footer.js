@@ -53,7 +53,7 @@ const Footer = () => {
 
                 {/* Social Media */}
                 <div>
-                    <h3 className="font-semibold mb-4 text-2xl">Follow us on</h3>
+                    <h3 className="font-semibold justify-center mb-4 text-2xl">Follow us on</h3>
                     <div className="flex space-x-4">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                             <FaFacebookF className="w-6 h-6" />
@@ -68,8 +68,19 @@ const Footer = () => {
                             <FaXTwitter className="w-6 h-6" />
                         </a>
                     </div>
+                    {/* ATOL Protected Logo */}
+                    <div className="flex pl-12 mt-2">
+                        <Image 
+                            src="/images/atol-protected.png" 
+                            alt="ATOL Protected" 
+                            width={50} 
+                            height={50}
+                        />
+                    </div>
                 </div>
             </div>
+            
+            
         </footer>
     );
 };

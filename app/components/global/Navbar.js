@@ -94,6 +94,9 @@ const Navbar = ({ isMobileMenuOpen, toggleMobileMenu }) => {
             <Link href="/contact-us" className="text-white hover:underline">
               Contact Us
             </Link>
+            <Link href="/faq" className="text-white hover:underline">
+              FAQ
+            </Link>
             {user && userRole === "user" && (
               <Link href="/dashboard/user/my-bookings" className="text-white hover:underline">
                 My Bookings
@@ -167,6 +170,9 @@ const Navbar = ({ isMobileMenuOpen, toggleMobileMenu }) => {
             </Link>
             <Link href="/contact-us" className="block text-white hover:underline" onClick={toggleMobileMenu}>
               Contact Us
+            </Link>
+            <Link href="/faq" className="text-white hover:underline">
+              FAQ
             </Link>
             {user && userRole === "user" && (
               <Link
